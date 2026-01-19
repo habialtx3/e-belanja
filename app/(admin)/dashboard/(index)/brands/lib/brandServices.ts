@@ -5,7 +5,6 @@ export const getBrands = () => prisma.brand.findMany()
 export const getBrandById = (id: number) =>
   prisma.brand.findUnique({ where: { id } })
 
-
 export const createBrand = (name: string, logo: string) =>
   prisma.brand.create({ data: { name, logo } })
 

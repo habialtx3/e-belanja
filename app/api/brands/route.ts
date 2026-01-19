@@ -25,7 +25,7 @@ export async function PATCH(req: NextRequest) {
         return NextResponse.json({ error: "Brand ID is required" }, { status: 400 })
     }
 
-    const updateData: Partial<Pick<Brand, 'name' | 'logo'>> = { name }
+    const updateData: Partial<Pick<Brand, 'name' | 'logo'>> = {}
 
     // tambahkan logoPath hanya jika logo baru dikirim
     if (logo) {
@@ -38,4 +38,17 @@ export async function PATCH(req: NextRequest) {
     })
 
     return NextResponse.json(brand)
+}
+
+
+export async function DELETE(req: NextRequest) {
+    const { id } = await req.json()
+
+    if (!id) return NextResponse.json({ error: "Brand Id is required" }, { status: 400 })
+
+    await prisma.brand.delete({
+        where : {id}
+    })
+
+    return NextResponse.json({message : "Brand delted succesfullly"})
 }

@@ -13,16 +13,27 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     const { name } = await req.json()
-    const category = await prisma.location.create({ data: { name } })
-    return NextResponse.json(category)
+
+    const exist = await prisma.location.findUnique({
+        where: { name }
+    })
+
+    if (exist) return NextResponse.json({ message: 'Location name already exist' }, { status: 409 })
+
+    const location = await prisma.location.create({ data: { name } })
+    return NextResponse.json(location)
 }
 
 export async function PATCH(req: NextRequest) {
     const { id, name } = await req.json()
-
-    if (!id) return NextResponse.json({ error: "Location ID is required" }, { status: 400 })
-
     const updateData: Partial<Pick<Location, 'name'>> = { name }
+
+    const exist = await prisma.location.findUnique({
+        where: { name }
+    })
+
+    if (exist) return NextResponse.json({ message: 'Location name already exist' }, { status: 409 })
+
     const location = await prisma.location.update({
         where: { id },
         data: updateData

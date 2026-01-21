@@ -50,5 +50,5 @@ export async function DELETE(req: NextRequest) {
         where : {id}
     })
 
-    return NextResponse.json({message : "Brand delted succesfullly"})
+    return NextResponse.json({message : "Brand deleted succesfullly"})
 }

@@ -221,14 +221,14 @@ export type LocationOrderByWithRelationInput = {
 
 export type LocationWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
-  name?: Prisma.StringFilter<"Location"> | string
   created_at?: Prisma.DateTimeFilter<"Location"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Location"> | Date | string
   products?: Prisma.ProductListRelationFilter
-}, "id">
+}, "id" | "name">
 
 export type LocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

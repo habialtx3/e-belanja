@@ -1,18 +1,23 @@
+import { NextResponse } from "next/server"
 import { getSession } from "./session"
 
-export async function authGuard(){
+export async function authGuard() {
     const session = await getSession()
 
-    if(!session) throw new Error("Unauthorized");
+    if (!session) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
 
     return session.user
 }
 
-export async function requireAdmin(){
+export async function requireAdmin() {
     const user = await authGuard()
 
-    if(user.role !== "superadmin"){
-        throw new Error("Forbidden");
+    if (user instanceof NextResponse) return user
+
+    if (user.role !== "superadmin") {
+        return NextResponse.json({ message: "Forbidden" }, { status: 403 })
     }
 
     return user

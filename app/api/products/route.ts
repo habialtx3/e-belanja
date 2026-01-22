@@ -1,3 +1,4 @@
+import { authGuard, requireAdmin } from "@/lib/auth/guard"
 import { prisma } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -30,6 +31,8 @@ export async function GET() {
 
 
 export async function POST(req: NextRequest) {
+    const user = await requireAdmin()
+    if (user instanceof NextResponse) return user
     try {
         const {
             brand_id,
@@ -73,7 +76,7 @@ export async function DELETE(req: NextRequest) {
         await prisma.product.delete({
             where: { id }
         })
-        
+
         return NextResponse.json({ message: 'Product has been deleted' }, { status: 400 })
 
     } catch (error) {

@@ -1,13 +1,19 @@
-import {parse} from "cookie"
 import { getSession } from "./session"
 
-export async function getAuthUser(req : Request) {
-    const cookies = parse(req.headers.get("cookie") || '')
-    const sessionId = cookies.session
-    if(!sessionId) return null
+export async function authGuard(){
+    const session = await getSession()
 
-    const session = await getSession(sessionId)
-    if(!session || session.expiresAt < new Date()) return null
+    if(!session) throw new Error("Unauthorized");
 
     return session.user
+}
+
+export async function requireAdmin(){
+    const user = await authGuard()
+
+    if(user.role !== "superadmin"){
+        throw new Error("Forbidden");
+    }
+
+    return user
 }

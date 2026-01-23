@@ -1,0 +1,682 @@
+import React from 'react'
+
+export default function Home() {
+    return (
+        <>
+            <nav className="container max-w-[1130px] mx-auto flex items-center justify-between bg-[#0D5CD7] p-5 rounded-3xl">
+                <div className="flex shrink-0">
+                    <img src="assets/logos/logo.svg" alt="icon" />
+                </div>
+                <ul className="flex items-center gap-[30px]">
+                    <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 font-bold text-[#FFC736]">
+                        <a href="index.html">Shop</a>
+                    </li>
+                    <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
+                        <a href="">Categories</a>
+                    </li>
+                    <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
+                        <a href="">Testimonials</a>
+                    </li>
+                    <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
+                        <a href="">Rewards</a>
+                    </li>
+                </ul>
+                <div className="flex items-center gap-3">
+                    <a href="cart.html">
+                        <div className="w-12 h-12 flex shrink-0">
+                            <img src="assets/icons/cart.svg" alt="icon" />
+                        </div>
+                    </a>
+                    <a
+                        href="signin.html"
+                        className="p-[12px_20px] bg-white rounded-full font-semibold"
+                    >
+                        Sign In
+                    </a>
+                    <a
+                        href="signup.html"
+                        className="p-[12px_20px] bg-white rounded-full font-semibold"
+                    >
+                        Sign Up
+                    </a>
+                </div>
+            </nav>
+            <div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-1 mt-[50px]">
+                <div className="flex flex-col gap-[30px]">
+                    <div className="flex items-center gap-[10px] p-[8px_16px] rounded-full bg-white w-fit">
+                        <div className="w-[22px] h-[22px] flex shrink-0">
+                            <img src="assets/icons/crown.svg" alt="icon" />
+                        </div>
+                        <p className="font-semibold text-sm">
+                            Most Popular 100th Product in Belanja
+                        </p>
+                    </div>
+                    <div className="flex flex-col gap-[14px]">
+                        <h1 className="font-bold text-[55px] leading-[55px]">
+                            Working Faster 10x
+                        </h1>
+                        <p className="text-lg leading-[34px] text-[#6A7789]">
+                            Dolor si amet lorem super-power features riches than any other
+                            platform devices AI integrated.
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <a
+                            href=""
+                            className="p-[18px_24px] rounded-full font-semibold bg-[#0D5CD7] text-white"
+                        >
+                            Add to Cart
+                        </a>
+                        <a
+                            href=""
+                            className="p-[18px_24px] rounded-full font-semibold bg-white"
+                        >
+                            View Details
+                        </a>
+                    </div>
+                </div>
+                <div className="w-[588px] h-[360px] flex shrink-0 overflow-hidden relative">
+                    <img
+                        src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
+                        className="object-contain"
+                        alt="icon"
+                    />
+                    <div className="absolute top-[60%] bg-white p-[14px_16px] rounded-3xl flex items-center gap-[10px]">
+                        <div className="w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden">
+                            <img
+                                src="assets/icons/code-circle.svg"
+                                className="w-6 h-6"
+                                alt="icon"
+                            />
+                        </div>
+                        <p className="font-semibold text-sm">
+                            Bonus Mac OS <br /> Capitan Pro
+                        </p>
+                    </div>
+                    <div className="absolute right-0 top-[30%] bg-white p-[14px_16px] rounded-3xl flex flex-col items-center gap-[10px]">
+                        <div className="w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden">
+                            <img
+                                src="assets/icons/star-outline.svg"
+                                className="w-6 h-6"
+                                alt="icon"
+                            />
+                        </div>
+                        <p className="font-semibold text-sm text-center">
+                            Include <br /> Warranty
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="container max-w-[1130px] mx-auto flex items-center justify-center gap-10 mt-[50px]">
+                <div className="flex items-center gap-[10px]">
+                    <div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
+                        <img
+                            src="assets/photos/p1.png"
+                            className="w-full h-full object-cover"
+                            alt="photo"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-[2px]">
+                        <p className="font-semibold text-sm leading-[22px]">Awesome product!</p>
+                        <p className="text-xs leading-[18px]">Jemmie Pemilia</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-[10px]">
+                    <div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
+                        <img
+                            src="assets/photos/p2.png"
+                            className="w-full h-full object-cover"
+                            alt="photo"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-[2px]">
+                        <p className="font-semibold text-sm leading-[22px]">Money saver 25%</p>
+                        <p className="text-xs leading-[18px]">Angga Risky</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-[10px]">
+                    <div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
+                        <img
+                            src="assets/photos/p3.png"
+                            className="w-full h-full object-cover"
+                            alt="photo"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-[2px]">
+                        <p className="font-semibold text-sm leading-[22px]">
+                            I love the warranty
+                        </p>
+                        <p className="text-xs leading-[18px]">Petina Malaka</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-[10px]">
+                    <div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
+                        <img
+                            src="assets/photos/p4.png"
+                            className="w-full h-full object-cover"
+                            alt="photo"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-[2px]">
+                        <p className="font-semibold text-sm leading-[22px]">Big deals ever!</p>
+                        <p className="text-xs leading-[18px]">Udin Sarifun</p>
+                    </div>
+                </div>
+            </div>
+            <section
+                id="content"
+                className="container max-w-[1130px] mx-auto flex flex-col gap-[50px] pt-[50px] pb-[100px]"
+            >
+                <div id="categories" className="flex flex-col gap-[30px]">
+                    <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-2xl leading-[34px]">
+                            Browse Products <br /> by Categories
+                        </h2>
+                        <a
+                            href="catalog.html"
+                            className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
+                        >
+                            Explore All
+                        </a>
+                    </div>
+                    <div className="grid grid-cols-4 gap-[30px]">
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/mobile.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Phones</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/game.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Games</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/airpods.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Headsets</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/box.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Essenstials</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/lamp.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Lights</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/watch.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Watches</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/monitor.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Desktops</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="categories-card">
+                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                    <img src="assets/icons/cup.svg" alt="icon" />
+                                </div>
+                                <div className="flex flex-col gap-[2px]">
+                                    <p className="font-semibold leading-[22px]">Awards</p>
+                                    <p className="text-sm text-[#616369]">4,583 products</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div id="picked" className="flex flex-col gap-[30px]">
+                    <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-2xl leading-[34px]">
+                            Most Picked <br /> Quality Products
+                        </h2>
+                        <a
+                            href="catalog.html"
+                            className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
+                        >
+                            Explore All
+                        </a>
+                    </div>
+                    <div className="grid grid-cols-5 gap-[30px]">
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">
+                                            iMac Green Energy
+                                        </p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Smartwei Pro 18</p>
+                                        <p className="text-sm text-[#616369]">Phones</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 11.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">MacBook Pro X</p>
+                                        <p className="text-sm text-[#616369]">Laptops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/airpods-max-select-skyblue-202011-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Tuli Nyaman</p>
+                                        <p className="text-sm text-[#616369]">Headsets</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 3.500.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/imac24-digitalmat-gallery-1-202310-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Warna iMac Jadi</p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 89.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div id="brands" className="flex flex-col gap-[30px]">
+                    <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-2xl leading-[34px]">
+                            Explore Our <br /> Popular Brands
+                        </h2>
+                        <a
+                            href="catalog.html"
+                            className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
+                        >
+                            Explore All
+                        </a>
+                    </div>
+                    <div className="grid grid-cols-5 gap-[30px]">
+                        <a href="" className="logo-card">
+                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/logos/microsoft.svg"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="logo-card">
+                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/logos/apple.svg"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="logo-card">
+                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/logos/samsung.svg"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="logo-card">
+                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/logos/huawei.svg"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" className="logo-card">
+                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/logos/nokia.svg"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div id="new-release" className="flex flex-col gap-[30px]">
+                    <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-2xl leading-[34px]">
+                            New Releases <br /> From Official Stores
+                        </h2>
+                        <a
+                            href="catalog.html"
+                            className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
+                        >
+                            Explore All
+                        </a>
+                    </div>
+                    <div className="grid grid-cols-5 gap-[30px]">
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">
+                                            iMac Green Energy
+                                        </p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Smartwei Pro 18</p>
+                                        <p className="text-sm text-[#616369]">Phones</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 11.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">MacBook Pro X</p>
+                                        <p className="text-sm text-[#616369]">Laptops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/airpods-max-select-skyblue-202011-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Tuli Nyaman</p>
+                                        <p className="text-sm text-[#616369]">Headsets</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 3.500.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/imac24-digitalmat-gallery-1-202310-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Warna iMac Jadi</p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 89.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/imac24-digitalmat-gallery-1-202310-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Warna iMac Jadi</p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 89.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/airpods-max-select-skyblue-202011-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Tuli Nyaman</p>
+                                        <p className="text-sm text-[#616369]">Headsets</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 3.500.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">
+                                            iMac Green Energy
+                                        </p>
+                                        <p className="text-sm text-[#616369]">Desktops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">Smartwei Pro 18</p>
+                                        <p className="text-sm text-[#616369]">Phones</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 11.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="details.html" className="product-card">
+                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                    <img
+                                        src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
+                                        className="w-full h-full object-contain"
+                                        alt="thumbnail"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[10px]">
+                                    <div className="flex flex-col gap-1">
+                                        <p className="font-semibold leading-[22px]">MacBook Pro X</p>
+                                        <p className="text-sm text-[#616369]">Laptops</p>
+                                    </div>
+                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                        Rp 24.000.000
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </>
+    )
+}

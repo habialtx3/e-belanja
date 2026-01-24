@@ -42,7 +42,7 @@ export default function Catalog() {
 
             <div
                 id="title"
-                className="container max-w-[1130px] mx-auto flex items-center justify-between"
+                className="bg-[#EFF3FA] container max-w-[1130px] mx-auto flex items-center justify-between"
             >
                 <div className="flex flex-col gap-5">
                     <div className="flex gap-5 items-center">

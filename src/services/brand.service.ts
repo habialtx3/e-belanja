@@ -5,5 +5,5 @@ export async function getBrands() {
 
     if (!res.ok) throw new Error("Failed fetch brands")
 
-    return res
+    return res.json()
 }

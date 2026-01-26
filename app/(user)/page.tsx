@@ -1,10 +1,14 @@
+import { getBrands } from '@/services/brand.service'
 import { getCategories } from '@/services/category.service'
 import { getProducts } from '@/services/product.service'
+import Link from 'next/link'
 import React from 'react'
 
 export default async function Home() {
     const categories = await getCategories()
     const products = await getProducts()
+    const brands = await getBrands()
+
     return (
         <>
             <nav className="container max-w-[1130px] mx-auto flex items-center justify-between bg-[#0D5CD7] p-5 rounded-3xl">
@@ -13,36 +17,36 @@ export default async function Home() {
                 </div>
                 <ul className="flex items-center gap-[30px]">
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 font-bold text-[#FFC736]">
-                        <a href="index.html">Shop</a>
+                        <Link href="index.html">Shop</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Categories</a>
+                        <Link href="/category">Categories</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Testimonials</a>
+                        <Link href="">Testimonials</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Rewards</a>
+                        <Link href="">Rewards</Link>
                     </li>
                 </ul>
                 <div className="flex items-center gap-3">
-                    <a href="cart.html">
+                    <Link href="cart.html">
                         <div className="w-12 h-12 flex shrink-0">
                             <img src="assets/icons/cart.svg" alt="icon" />
                         </div>
-                    </a>
-                    <a
-                        href="signin.html"
+                    </Link>
+                    <Link
+                        href="sign-in"
                         className="p-[12px_20px] bg-white rounded-full font-semibold"
                     >
                         Sign In
-                    </a>
-                    <a
-                        href="signup.html"
+                    </Link>
+                    <Link
+                        href="sign-up"
                         className="p-[12px_20px] bg-white rounded-full font-semibold"
                     >
                         Sign Up
-                    </a>
+                    </Link>
                 </div>
             </nav>
             <div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-1 mt-[50px]">
@@ -65,18 +69,18 @@ export default async function Home() {
                         </p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <a
+                        <Link
                             href=""
                             className="p-[18px_24px] rounded-full font-semibold bg-[#0D5CD7] text-white"
                         >
                             Add to Cart
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href=""
                             className="p-[18px_24px] rounded-full font-semibold bg-white"
                         >
                             View Details
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="w-[588px] h-[360px] flex shrink-0 overflow-hidden relative">
@@ -176,16 +180,16 @@ export default async function Home() {
                         <h2 className="font-bold text-2xl leading-[34px]">
                             Browse Products <br /> by Categories
                         </h2>
-                        <a
+                        <Link
                             href="catalog.html"
                             className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
                         >
                             Explore All
-                        </a>
+                        </Link>
                     </div>
                     <div className="grid grid-cols-4 gap-[30px]">
                         {categories.map((category: any) => (
-                            <a href="" key={category.id} className="categories-card">
+                            <Link href="" key={category.id} className="categories-card">
                                 <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                     <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
                                         <img src="assets/icons/mobile.svg" alt="icon" />
@@ -195,7 +199,7 @@ export default async function Home() {
                                         <p className="text-sm text-[#616369]">4,583 products</p>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -204,15 +208,15 @@ export default async function Home() {
                         <h2 className="font-bold text-2xl leading-[34px]">
                             Most Picked <br /> Quality Products
                         </h2>
-                        <a
+                        <Link
                             href="catalog.html"
                             className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
                         >
                             Explore All
-                        </a>
+                        </Link>
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
-                        <a href="details.html" className="product-card">
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -233,8 +237,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -253,8 +257,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -273,8 +277,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -293,8 +297,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -313,7 +317,7 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div id="brands" className="flex flex-col gap-[30px]">
@@ -321,26 +325,28 @@ export default async function Home() {
                         <h2 className="font-bold text-2xl leading-[34px]">
                             Explore Our <br /> Popular Brands
                         </h2>
-                        <a
+                        <Link
                             href="catalog.html"
                             className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
                         >
                             Explore All
-                        </a>
+                        </Link>
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
-                        <a href="" className="logo-card">
-                            <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
-                                    <img
-                                        src="assets/logos/microsoft.svg"
-                                        className="w-full h-full object-contain"
-                                        alt="thumbnail"
-                                    />
+                        {brands.map((brand : any) => (
+                            <Link href="" key={brand.id} className="logo-card">
+                                <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                    <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
+                                        <img
+                                            src="assets/logos/microsoft.svg"
+                                            className="w-full h-full object-contain"
+                                            alt="thumbnail"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                        <a href="" className="logo-card">
+                            </Link>
+                        ))}
+                        {/* <Link href="" className="logo-card">
                             <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -350,8 +356,8 @@ export default async function Home() {
                                     />
                                 </div>
                             </div>
-                        </a>
-                        <a href="" className="logo-card">
+                        </Link>
+                        <Link href="" className="logo-card">
                             <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -361,8 +367,8 @@ export default async function Home() {
                                     />
                                 </div>
                             </div>
-                        </a>
-                        <a href="" className="logo-card">
+                        </Link>
+                        <Link href="" className="logo-card">
                             <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -372,8 +378,8 @@ export default async function Home() {
                                     />
                                 </div>
                             </div>
-                        </a>
-                        <a href="" className="logo-card">
+                        </Link>
+                        <Link href="" className="logo-card">
                             <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -383,7 +389,7 @@ export default async function Home() {
                                     />
                                 </div>
                             </div>
-                        </a>
+                        </Link> */}
                     </div>
                 </div>
                 <div id="new-release" className="flex flex-col gap-[30px]">
@@ -391,16 +397,16 @@ export default async function Home() {
                         <h2 className="font-bold text-2xl leading-[34px]">
                             New Releases <br /> From Official Stores
                         </h2>
-                        <a
+                        <Link
                             href="catalog.html"
                             className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold"
                         >
                             Explore All
-                        </a>
+                        </Link>
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
                         {products.map((product: any) => (
-                            <a href="details.html" key={product.id} className="product-card">
+                            <Link href="details.html" key={product.id} className="product-card">
                                 <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                     <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                         <img
@@ -412,7 +418,7 @@ export default async function Home() {
                                     <div className="flex flex-col gap-[10px]">
                                         <div className="flex flex-col gap-1">
                                             <p className="font-semibold leading-[22px]">
-                                                { product.name}
+                                                {product.name}
                                             </p>
                                             <p className="text-sm text-[#616369]">Desktops</p>
                                         </div>
@@ -421,10 +427,10 @@ export default async function Home() {
                                         </p>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
 
-                        {/* <a href="details.html" className="product-card">
+                        {/* <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -443,8 +449,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -463,8 +469,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -483,8 +489,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -503,8 +509,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -523,8 +529,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -543,8 +549,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -565,8 +571,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -585,8 +591,8 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                        </Link>
+                        <Link href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -605,7 +611,7 @@ export default async function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a> */}
+                        </Link> */}
                     </div>
                 </div>
             </section>

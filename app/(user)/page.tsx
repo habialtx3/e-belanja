@@ -1,6 +1,10 @@
+import { getCategories } from '@/services/category.service'
+import { getProducts } from '@/services/product.service'
 import React from 'react'
 
-export default function Home() {
+export default async function Home() {
+    const categories = await getCategories()
+    const products = await getProducts()
     return (
         <>
             <nav className="container max-w-[1130px] mx-auto flex items-center justify-between bg-[#0D5CD7] p-5 rounded-3xl">
@@ -180,94 +184,19 @@ export default function Home() {
                         </a>
                     </div>
                     <div className="grid grid-cols-4 gap-[30px]">
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/mobile.svg" alt="icon" />
+                        {categories.map((category: any) => (
+                            <a href="" key={category.id} className="categories-card">
+                                <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                    <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
+                                        <img src="assets/icons/mobile.svg" alt="icon" />
+                                    </div>
+                                    <div className="flex flex-col gap-[2px]">
+                                        <p className="font-semibold leading-[22px]">{category.name}</p>
+                                        <p className="text-sm text-[#616369]">4,583 products</p>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Phones</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/game.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Games</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/airpods.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Headsets</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/box.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Essenstials</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/lamp.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Lights</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/watch.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Watches</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/monitor.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Desktops</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" className="categories-card">
-                            <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                                    <img src="assets/icons/cup.svg" alt="icon" />
-                                </div>
-                                <div className="flex flex-col gap-[2px]">
-                                    <p className="font-semibold leading-[22px]">Awards</p>
-                                    <p className="text-sm text-[#616369]">4,583 products</p>
-                                </div>
-                            </div>
-                        </a>
+                            </a>
+                        ))}
                     </div>
                 </div>
                 <div id="picked" className="flex flex-col gap-[30px]">
@@ -470,29 +399,32 @@ export default function Home() {
                         </a>
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
-                        <a href="details.html" className="product-card">
-                            <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
-                                <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
-                                    <img
-                                        src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
-                                        className="w-full h-full object-contain"
-                                        alt="thumbnail"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-[10px]">
-                                    <div className="flex flex-col gap-1">
-                                        <p className="font-semibold leading-[22px]">
-                                            iMac Green Energy
-                                        </p>
-                                        <p className="text-sm text-[#616369]">Desktops</p>
+                        {products.map((product: any) => (
+                            <a href="details.html" key={product.id} className="product-card">
+                                <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
+                                    <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
+                                        <img
+                                            src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
+                                            className="w-full h-full object-contain"
+                                            alt="thumbnail"
+                                        />
                                     </div>
-                                    <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                                        Rp 24.000.000
-                                    </p>
+                                    <div className="flex flex-col gap-[10px]">
+                                        <div className="flex flex-col gap-1">
+                                            <p className="font-semibold leading-[22px]">
+                                                { product.name}
+                                            </p>
+                                            <p className="text-sm text-[#616369]">Desktops</p>
+                                        </div>
+                                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                            Rp 24.000.000
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                        <a href="details.html" className="product-card">
+                            </a>
+                        ))}
+
+                        {/* <a href="details.html" className="product-card">
                             <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                     <img
@@ -673,7 +605,7 @@ export default function Home() {
                                     </p>
                                 </div>
                             </div>
-                        </a>
+                        </a> */}
                     </div>
                 </div>
             </section>

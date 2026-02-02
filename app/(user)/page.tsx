@@ -334,7 +334,7 @@ export default async function Home() {
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
                         {brands.map((brand : any) => (
-                            <Link href="" key={brand.id} className="logo-card">
+                            <Link href={`brands/${brand.id}`} key={brand.id} className="logo-card">
                                 <div className="bg-white flex items-center justify-center p-[30px_20px] rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                     <div className="w-full h-[30px] flex shrink-0 items-center justify-center overflow-hidden">
                                         <img
@@ -406,7 +406,7 @@ export default async function Home() {
                     </div>
                     <div className="grid grid-cols-5 gap-[30px]">
                         {products.map((product: any) => (
-                            <Link href="details.html" key={product.id} className="product-card">
+                            <Link href={`product/${product.id}`} key={product.id} className="product-card">
                                 <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                     <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
                                         <img
@@ -420,10 +420,10 @@ export default async function Home() {
                                             <p className="font-semibold leading-[22px]">
                                                 {product.name}
                                             </p>
-                                            <p className="text-sm text-[#616369]">Desktops</p>
+                                            <p className="text-sm text-[#616369]">{product.category.name}</p>
                                         </div>
                                         <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                                            Rp 24.000.000
+                                            Rp.{Number(product.price).toLocaleString("id")}
                                         </p>
                                     </div>
                                 </div>

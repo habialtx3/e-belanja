@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function Navbar() {
@@ -9,36 +10,36 @@ export default function Navbar() {
                 </div>
                 <ul className="flex items-center gap-[30px]">
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="index.html">Shop</a>
+                        <Link href="/">Shop</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Categories</a>
+                        <Link href="">Categories</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Testimonials</a>
+                        <Link href="">Testimonials</Link>
                     </li>
                     <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
-                        <a href="">Rewards</a>
+                        <Link href="">Rewards</Link>
                     </li>
                 </ul>
                 <div className="flex items-center gap-3">
-                    <a href="cart.html">
+                    <Link href="cart">
                         <div className="w-12 h-12 flex shrink-0">
                             <img src="/assets/icons/cart.svg" alt="icon" />
                         </div>
-                    </a>
-                    <a
-                        href="signin.html"
+                    </Link>
+                    <Link
+                        href="sign-in"
                         className="p-[12px_20px] bg-white rounded-full font-semibold"
                     >
                         Sign In
-                    </a>
-                    <a
-                        href="signup.html"
+                    </Link>
+                    <Link
+                        href="sign-up"
                         className="p-[12px_20px] bg-white rounded-full font-semibold"
                     >
                         Sign Up
-                    </a>
+                    </Link>
                 </div>
             </nav>
         </>

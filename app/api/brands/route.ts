@@ -27,7 +27,6 @@ export async function PATCH(req: NextRequest) {
 
     const updateData: Partial<Pick<Brand, 'name' | 'logo'>> = {}
 
-    // tambahkan logoPath hanya jika logo baru dikirim
     if (logo) {
         updateData.logo = `${logoPath}${logo}`
     }

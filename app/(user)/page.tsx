@@ -186,7 +186,7 @@ export default async function Home() {
                             Explore All
                         </Link>
                     </div>
-                    <ProductSection/>
+                    <ProductSection />
                 </div>
                 <div id="brands" className="flex flex-col gap-[30px]">
                     <div className="flex items-center justify-between">

@@ -7,7 +7,7 @@ export default function UserNavbar() {
             </div>
             <ul className="flex items-center gap-[30px]">
                 <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 font-bold text-[#FFC736]">
-                    <Link href="index.html">Shop</Link>
+                    <Link href="/">Shop</Link>
                 </li>
                 <li className="hover:font-bold hover:text-[#FFC736] transition-all duration-300 text-white">
                     <Link href="/category">Categories</Link>
@@ -20,7 +20,7 @@ export default function UserNavbar() {
                 </li>
             </ul>
             <div className="flex items-center gap-3">
-                <Link href="cart.html">
+                <Link href="/cart">
                     <div className="w-12 h-12 flex shrink-0">
                         <img src="assets/icons/cart.svg" alt="icon" />
                     </div>

@@ -1,12 +1,31 @@
 'use client'
 
+import { getProductById } from '@/services/product.service'
+import { Product } from '@/types/product'
 import Flickity from 'flickity'
-import React, { useEffect, useRef } from 'react'
+import { useParams } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
 
 export default function DetailsProduct() {
-    const carouselRef = useRef<HTMLDivElement | null>(null)
- 
+    const {id} = useParams<{id : string}> ()
+    console.log(id);
 
+    const carouselRef = useRef<HTMLDivElement | null>(null)
+    const [product, setProduct] = useState<Product | null>(null)
+
+    useEffect(() => {
+        if (!id) return
+
+        async function fetchProduct() {
+            const product = await getProductById(Number(id))
+            setProduct(product)
+        }
+
+        fetchProduct()
+    }, [id])
+
+    console.log(product);
+    
     useEffect(() => {
         if (!carouselRef.current) return
 
@@ -86,7 +105,7 @@ export default function DetailsProduct() {
                         </a>
                     </div>
                     <h1 className="font-bold text-4xl leading-9">
-                        iMac Pro Anniv Edition 100th
+                        {product?.name}
                     </h1>
                 </div>
                 <div className="flex items-center gap-2 justify-end">
@@ -396,7 +415,7 @@ export default function DetailsProduct() {
                     <div className="w-full bg-white border border-[#E5E5E5] flex flex-col gap-[30px] p-[30px] rounded-3xl">
                         <div className="flex flex-col gap-1">
                             <p className="font-semibold">Brand New</p>
-                            <p className="font-bold text-[32px] leading-[48px]">Rp 56.500.000</p>
+                            <p className="font-bold text-[32px] leading-[48px]">Rp {Number(product?.price).toLocaleString('id-Id')}</p>
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className="flex items-center gap-2">

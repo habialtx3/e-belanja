@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react'
 
 export default function DetailsProduct() {
     const carouselRef = useRef<HTMLDivElement | null>(null)
+ 
 
     useEffect(() => {
         if (!carouselRef.current) return

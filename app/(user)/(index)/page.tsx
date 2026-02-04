@@ -1,8 +1,8 @@
 import { getBrands } from '@/services/brand.service'
 import Link from 'next/link'
 import React from 'react'
-import CategorySection from './components/CategorySection'
-import ProductSection from './components/ProductSection'
+import CategorySection from '../components/CategorySection'
+import ProductSection from '../components/ProductSection'
 
 export default async function Home() {
     const brands = await getBrands()

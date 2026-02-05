@@ -1,5 +1,9 @@
+import { getSession } from '@/lib/auth/session'
 import Link from 'next/link'
-export default function UserNavbar() {
+export default async function UserNavbar() {
+    const session = await getSession()
+    const user = session?.user
+
     return (
         <nav className="container max-w-[1130px] mx-auto flex items-center justify-between bg-[#0D5CD7] p-5 rounded-3xl">
             <div className="flex shrink-0">
@@ -25,18 +29,31 @@ export default function UserNavbar() {
                         <img src="assets/icons/cart.svg" alt="icon" />
                     </div>
                 </Link>
-                <Link
-                    href="sign-in"
-                    className="p-[12px_20px] bg-white rounded-full font-semibold"
-                >
-                    Sign In
-                </Link>
-                <Link
-                    href="sign-up"
-                    className="p-[12px_20px] bg-white rounded-full font-semibold"
-                >
-                    Sign Up
-                </Link>
+                {
+                    !user ? (
+                        <>
+                            <Link
+                                href="sign-in"
+                                className="p-[12px_20px] bg-white rounded-full font-semibold"
+                            >
+                                Sign In
+                            </Link>
+                            <Link
+                                href="sign-up"
+                                className="p-[12px_20px] bg-white rounded-full font-semibold"
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <span>Hi {user.name}</span>
+                            <form action="/api/auth/logout" method='POST'>
+                                <button type='submit'>Log Out</button></form>
+                        </>
+                    )
+                }
+
             </div>
         </nav>
     )

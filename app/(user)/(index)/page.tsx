@@ -10,7 +10,6 @@ export default async function Home() {
 
     return (
         <>
-            <UserNavbar/>
             <div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-1 mt-[50px]">
                 <div className="flex flex-col gap-[30px]">
                     <div className="flex items-center gap-[10px] p-[8px_16px] rounded-full bg-white w-fit">

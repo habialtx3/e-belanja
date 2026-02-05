@@ -16,7 +16,7 @@ export async function getSession() {
 
     if (session.expiresAt < new Date()) {
         await prisma.session.delete({
-            where: { id: cookieStore.get("session")?.value }
+            where: { id: session.id }
         })
         return null
     }
@@ -35,7 +35,8 @@ export async function destroySession() {
     })
 }
 
-export async function delteSession(sessionId: string) {
-    return prisma.session.delete({ where: { id: sessionId } })
-    cookieStore.delete('session')
+export async function deleteSession(sessionId: string) {
+    const cookieStore = await cookies()
+    prisma.session.delete({ where: { id: sessionId } })
+    cookieStore.delete("session")
 }

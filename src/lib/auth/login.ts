@@ -31,6 +31,7 @@ export async function login(email: string, password: string) {
 
 
     return {
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,

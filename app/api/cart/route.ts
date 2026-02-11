@@ -3,7 +3,31 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
+    try {
+        const session = await getSession()
 
+        if (!session?.user) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+        }
+
+        const cart = await prisma.order.findFirst({
+            where: {
+                user_id: session.userId,
+                status: 'pending'
+            },
+            include: {
+                products: {
+                    include: {
+                        product: true
+                    }
+                }
+            }
+        })
+
+        return NextResponse.json(cart)
+    } catch (error) {
+        return NextResponse.json({ message: 'Server error' }, { status: 500 })
+    }
 }
 
 export async function POST(req: NextRequest) {
@@ -73,3 +97,4 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Server error' }, { status: 500 })
     }
 }
+

@@ -16,7 +16,6 @@ export default function SignInUser() {
         e.preventDefault()
         setLoading(true)
         setError('')
-
         const res = await fetch('/api/auth/login', {
             method: "POST",
             headers: {
@@ -33,10 +32,10 @@ export default function SignInUser() {
             setLoading(false)
             return
         }
-
         router.push('/')
-
+        router.refresh()
     }
+
     return (
         <div
             id="signin"

@@ -12,7 +12,7 @@ export async function GET() {
 
         const cart = await prisma.order.findFirst({
             where: {
-                user_id: session.userId,
+                user_id: session.user.id,
                 status: 'pending'
             },
             include: {

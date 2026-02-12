@@ -1,125 +1,127 @@
-  generator client {
-    provider = "prisma-client"
-    output   = "../src/generated/prisma"
-  }
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
 
-  datasource db {
-    provider = "postgresql"
-  }
+datasource db {
+  provider = "postgresql"
+}
 
-  model User {
-    id         Int       @id @default(autoincrement())
-    name       String    @db.VarChar(255)
-    email      String    @unique @db.VarChar(255)
-    password   String    @db.VarChar(255)
-    role       RoleUser  @default(customer)
-    created_at DateTime  @default(now())
-    updated_at DateTime  @updatedAt
-    orders     Order[]
-    sessions   Session[]
-  }
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  email      String    @unique @db.VarChar(255)
+  password   String    @db.VarChar(255)
+  role       RoleUser  @default(customer)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  orders     Order[]
+  sessions   Session[]
+}
 
-  model Session {
-    id        String   @id
-    userId    Int
-    expiresAt DateTime
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  }
+model Session {
+  id        String   @id
+  userId    Int
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  model Brand {
-    id         Int       @id @default(autoincrement())
-    name       String    @db.VarChar(255)
-    logo       String    @db.VarChar(255)
-    created_at DateTime  @default(now())
-    updated_at DateTime  @updatedAt
-    products   Product[]
-  }
+model Brand {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  logo       String    @db.VarChar(255)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   Product[]
+}
 
-  model Category {
-    id         Int       @id @default(autoincrement())
-    name       String    @db.VarChar(255)
-    created_at DateTime  @default(now())
-    updated_at DateTime  @updatedAt
-    products   Product[]
-  }
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   Product[]
+}
 
-  model Location {
-    id         Int       @id @default(autoincrement())
-    name       String    @unique @db.VarChar(255)
-    created_at DateTime  @default(now())
-    updated_at DateTime  @updatedAt
-    products   Product[]
-  }
+model Location {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique @db.VarChar(255)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   Product[]
+}
 
-  model Product {
-    id          Int            @id @default(autoincrement())
-    brand_id    Int
-    category_id Int
-    location_id Int
-    name        String         @db.VarChar(255)
-    description String
-    price       BigInt
-    stock       ProductStock
-    images      String[]
-    created_at  DateTime       @default(now())
-    updated_at  DateTime       @updatedAt
-    orders      OrderProduct[]
-    brand       Brand          @relation(fields: [brand_id], references: [id])
-    category    Category       @relation(fields: [category_id], references: [id])
-    location    Location       @relation(fields: [location_id], references: [id])
-  }
+model Product {
+  id          Int            @id @default(autoincrement())
+  brand_id    Int
+  category_id Int
+  location_id Int
+  name        String         @db.VarChar(255)
+  description String
+  price       BigInt
+  stock       ProductStock
+  images      String[]
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @updatedAt
+  orders      OrderProduct[]
+  brand       Brand          @relation(fields: [brand_id], references: [id])
+  category    Category       @relation(fields: [category_id], references: [id])
+  location    Location       @relation(fields: [location_id], references: [id])
+}
 
-  model Order {
-    id         Int            @id @default(autoincrement())
-    code       String         @unique
-    user_id    Int
-    total      BigInt
-    status     StatusOrder
-    created_at DateTime       @default(now())
-    updated_at DateTime       @updatedAt
-    user       User           @relation(fields: [user_id], references: [id])
-    detail     OrderDetail?
-    products   OrderProduct[]
-  }
+model Order {
+  id         Int            @id @default(autoincrement())
+  code       String         @unique
+  user_id    Int
+  total      BigInt
+  status     StatusOrder
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  user       User           @relation(fields: [user_id], references: [id])
+  detail     OrderDetail?
+  products   OrderProduct[]
+}
 
-  model OrderDetail {
-    id          Int      @id @default(autoincrement())
-    order_id    Int      @unique
-    name        String   @db.VarChar(255)
-    phone       String   @db.VarChar(255)
-    address     String   @db.VarChar(255)
-    city        String   @db.VarChar(255)
-    postal_code String   @db.VarChar(255)
-    notes       String?  @db.VarChar(255)
-    created_at  DateTime @default(now())
-    updated_at  DateTime @updatedAt
-    order       Order    @relation(fields: [order_id], references: [id])
-  }
+model OrderDetail {
+  id          Int      @id @default(autoincrement())
+  order_id    Int      @unique
+  name        String   @db.VarChar(255)
+  phone       String   @db.VarChar(255)
+  address     String   @db.VarChar(255)
+  city        String   @db.VarChar(255)
+  postal_code String   @db.VarChar(255)
+  notes       String?  @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  order       Order    @relation(fields: [order_id], references: [id])
+}
 
-  model OrderProduct {
-    id         Int      @id @default(autoincrement())
-    product_id Int
-    order_id   Int
-    subtotal   BigInt
-    quantity   Int
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    order      Order    @relation(fields: [order_id], references: [id])
-    product    Product  @relation(fields: [product_id], references: [id])
-  }
+model OrderProduct {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  order_id   Int
+  subtotal   BigInt
+  quantity   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  order      Order    @relation(fields: [order_id], references: [id])
+  product    Product  @relation(fields: [product_id], references: [id])
 
-  enum RoleUser {
-    superadmin
-    customer
-  }
+  @@unique([order_id, product_id])
+}
 
-  enum ProductStock {
-    ready
-    preorder
-  }
+enum RoleUser {
+  superadmin
+  customer
+}
 
-  enum StatusOrder {
-    pending
-    success
-    failed
-  }
+enum ProductStock {
+  ready
+  preorder
+}
+
+enum StatusOrder {
+  pending
+  success
+  failed
+}

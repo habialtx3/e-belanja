@@ -49,28 +49,36 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-    const session = await getSession()
+export async function DELETE(req: NextRequest, { params }: { params: Promise <{ id: string }> }) {
+    try {
 
-    if (!session?.user) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
-    }
+        const session = await getSession()
+        const {id} = await params
 
-    const itemId = Number(params.id)
-
-    const item = await prisma.orderProduct.findUnique({
-        where: { id: itemId },
-        include: {
-            order: true,
-            product: true
+        if (!session?.user) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
         }
-    })
 
-    if (!item || item.order.user_id !== session.user.id) {
-        return NextResponse.json({ message: "Item not found" }, { status: 404 })
+        const itemId = Number(id)
+
+        const item = await prisma.orderProduct.findUnique({
+            where: { id: itemId },
+            include: {
+                order: true,
+                product: true
+            }
+        })
+
+        if (!item || item.order.user_id !== session.user.id) {
+            return NextResponse.json({ message: "Item not found" }, { status: 404 })
+        }
+
+        await prisma.orderProduct.delete({
+            where: { id: itemId }
+        })
+        return NextResponse.json({ message: "Item deleted" })
     }
-
-    await prisma.orderProduct.delete({
-        where: { id: itemId }
-    })
+    catch (error) {
+        return NextResponse.json({ message: 'Server error' }, { status: 500 })
+    }
 }

@@ -1,4 +1,4 @@
-import { ProductStock, RoleUser } from '@/generated/prisma/enums';
+import { ProductStock, RoleUser, StatusOrder } from '@/generated/prisma/enums';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
@@ -82,47 +82,121 @@ import bcrypt from 'bcryptjs';
 //   console.log("Seed Location selesai!");
 // }
 
+// async function main() {
+//   const brands = await prisma.brand.findMany();
+//   const categories = await prisma.category.findMany();
+//   const locations = await prisma.location.findMany();
+
+//   if (!brands.length || !categories.length || !locations.length) {
+//     console.log("Seed Brand/Category/Location dulu!");
+//     return;
+//   }
+
+//   const productsData = [
+//     {
+//       name: "Laptop MacBook Pro",
+//       description: "Laptop Apple MacBook Pro 16 inch",
+//       price: BigInt(30000000),
+//       stock: ProductStock.ready,
+//       brand_id: brands[0].id,
+//       category_id: categories[0].id,
+//       location_id: locations[0].id,
+//       images: ["macbook1.png", "macbook2.png"]
+//     },
+//     {
+//       name: "iPhone 14",
+//       description: "Smartphone Apple iPhone 14",
+//       price: BigInt(15000000),
+//       stock: ProductStock.preorder,
+//       brand_id: brands[2].id,
+//       category_id: categories[0].id,
+//       location_id: locations[0].id,
+//       images: ["iphone14.png"]
+//     }
+//   ];
+
+//   for (const product of productsData) {
+//     await prisma.product.create({ data: product });
+//   }
+
+//   console.log("Seed products berhasil!");
+// }
 
 async function main() {
-  const brands = await prisma.brand.findMany();
-  const categories = await prisma.category.findMany();
-  const locations = await prisma.location.findMany();
+  const user = await prisma.user.findFirst()
+  const products = await prisma.product.findMany({
+    take: 3
+  })
 
-  if (!brands.length || !categories.length || !locations.length) {
-    console.log("Seed Brand/Category/Location dulu!");
-    return;
+  if (!user || products.length === 0) {
+    throw new Error("User / Product belum ada");
   }
 
-  const productsData = [
-    {
-      name: "Laptop MacBook Pro",
-      description: "Laptop Apple MacBook Pro 16 inch",
-      price: BigInt(30000000),
-      stock: ProductStock.ready,
-      brand_id: brands[0].id,
-      category_id: categories[0].id,
-      location_id: locations[0].id,
-      images: ["macbook1.png", "macbook2.png"]
-    },
-    {
-      name: "iPhone 14",
-      description: "Smartphone Apple iPhone 14",
-      price: BigInt(15000000),
-      stock: ProductStock.preorder,
-      brand_id: brands[2].id,
-      category_id: categories[0].id,
-      location_id: locations[0].id,
-      images: ["iphone14.png"]
+  const order1 = await prisma.order.create({
+    data: {
+      code: "ORD-001",
+      user_id: user.id,
+      total: 0,
+      status: StatusOrder.pending,
     }
-  ];
+  })
 
-  for (const product of productsData) {
-    await prisma.product.create({ data: product });
+  let totalOrder1 = 0
+
+  for (const product of products) {
+    const quantity = 2
+    const subtotal = Number(product.price) * quantity
+
+    await prisma.orderProduct.create({
+      data: {
+        order_id: order1.id,
+        product_id: product.id,
+        quantity,
+        subtotal
+      }
+    })
+
+    totalOrder1 += subtotal
   }
 
-  console.log("Seed products berhasil!");
-}
+  await prisma.order.update({
+    where: { id: order1.id },
+    data: {
+      total: totalOrder1
+    }
+  })
 
+  const order2 = await prisma.order.create({
+    data: {
+      code: "ORD-002",
+      user_id: user.id,
+      total: 0,
+      status: StatusOrder.pending,
+    }
+  })
+
+  const product = products[2]
+  const quantity = 2
+  const subtotal = Number(product.price) * quantity
+
+   await prisma.orderProduct.create({
+    data: {
+      order_id: order2.id,
+      product_id: product.id,
+      quantity,
+      subtotal
+    }
+  })
+
+  await prisma.order.update({
+    where: { id: order2.id },
+    data: {
+      total: subtotal
+    }
+  })
+  
+  console.log("Seed Order & OrderProduct success")
+}
 
 main()
   .catch(e => console.error(e))

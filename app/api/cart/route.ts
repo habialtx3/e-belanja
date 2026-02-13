@@ -2,6 +2,13 @@ import { getSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+function serializBigInt(data: any) {
+    return JSON.parse(
+        JSON.stringify(data,(_, value) =>
+            typeof value === 'bigint' ? value.toString() : value
+        )
+    )
+}
 export async function GET() {
     try {
         const session = await getSession()
@@ -24,7 +31,7 @@ export async function GET() {
             }
         })
 
-        return NextResponse.json(cart)
+        return NextResponse.json(serializBigInt(cart))
     } catch (error) {
         return NextResponse.json({ message: 'Server error' }, { status: 500 })
     }

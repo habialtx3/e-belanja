@@ -1,11 +1,18 @@
 import React from 'react'
 import UserNavbar from '../components/UserNavbar'
+import { getCart } from '@/services/cart.service'
+import { getSession } from '@/lib/auth/session'
+import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
 
-export default function CartPage() {
+export default async function CartPage() {
+
+    const session = await getSession()
+    const cart = await getCart(Number(session?.user.id))
     return (
         <>
             <header className="bg-[#EFF3FA] pt-[30px] h-[351px] -mb-[181px]">
-                <UserNavbar/>
+                <UserNavbar />
             </header>
             <div
                 id="title"
@@ -32,132 +39,51 @@ export default function CartPage() {
                 id="cart"
                 className="container max-w-[1130px] mx-auto flex flex-col gap-5 mt-[50px]"
             >
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
+                {cart?.products?.map((item) => (
+                    <div key={item.id} className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
+                        <div className="flex items-center w-[340px] gap-5">
+                            <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
+                                <img
+                                    src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
+                                    className="w-full h-full object-contain"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1">
+                                <p className="font-semibold leading-[22px]">{item?.product?.name}</p>
+                                <p className="text-sm text-[#616369]">{item?.product?.category.name}</p>
+                            </div>
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">iPhone Sawedia Pro</p>
-                            <p className="text-sm text-[#616369]">Phones</p>
+                        <div className="w-[150px] flex flex-col gap-1">
+                            <p className="text-sm text-[#616369]">Price</p>
+                            <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                Rp. {Number(item?.product?.price).toLocaleString('id-ID')}
+                            </p>
                         </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 24.000.000
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">1,389</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
+                        <div className="w-[120px] flex flex-col gap-1">
+                            <p className="text-sm text-[#616369]">Quantity</p>
+                            <div className="flex items-center gap-3">
+                                <button className="w-6 h-6 flex shrink-0">
+                                    <img src="assets/icons/minus-cirlce.svg" alt="minus" />
+                                </button>
+                                <p className="text-[#0D5CD7] font-semibold leading-[22px]">{item.quantity}</p>
+                                <button className="w-6 h-6 flex shrink-0">
+                                    <img src="assets/icons/add-circle.svg" alt="plus" />
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 789.493.222
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
+                        <div className="w-[150px] flex flex-col gap-1">
+                            <p className="text-sm text-[#616369]">Total</p>
+                            <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                Rp. {item.subtotal.toLocaleString('id-ID')}
+                            </p>
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">MacBook Pro X</p>
-                            <p className="text-sm text-[#616369]">Laptops</p>
-                        </div>
+                        <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
+                            Remove
+                        </button>
                     </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 112.495.390
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">421</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 1.789.493.222
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">iMac Anniversary 100th</p>
-                            <p className="text-sm text-[#616369]">Desktops</p>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp2.589.382
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">5</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 22.839.492
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
+                ))}
+
             </div>
             <form
                 action=""

@@ -9,6 +9,8 @@ export default async function CartPage() {
 
     const session = await getSession()
     const cart = await getCart(Number(session?.user.id))
+    console.log(cart);
+    
     return (
         <>
             <header className="bg-[#EFF3FA] pt-[30px] h-[351px] -mb-[181px]">
@@ -39,7 +41,8 @@ export default async function CartPage() {
                 id="cart"
                 className="container max-w-[1130px] mx-auto flex flex-col gap-5 mt-[50px]"
             >
-                {cart?.products?.map((item) => (
+                {cart?.map((order) => 
+                order.products?.map((item) => (
                     <div key={item.id} className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
                         <div className="flex items-center w-[340px] gap-5">
                             <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
@@ -82,7 +85,8 @@ export default async function CartPage() {
                             Remove
                         </button>
                     </div>
-                ))}
+                ))
+                )}
 
             </div>
             <form

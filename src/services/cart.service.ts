@@ -6,7 +6,7 @@ export async function getCart(userId: number) {
         redirect('/sign-in')
     }
 
-    return await prisma.order.findFirst({
+    return await prisma.order.findMany({
         where: {
             user_id: userId,
             status: 'pending'

@@ -1,3 +1,4 @@
+'use server'
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 
@@ -15,13 +16,28 @@ export async function getCart(userId: number) {
             products: {
                 include: {
                     product: {
-                        include : {
-                            brand : true,
-                            category : true
+                        include: {
+                            brand: true,
+                            category: true
                         }
                     }
                 }
             }
         }
     })
+}
+
+export async function deleteCart(itemId: number) {
+
+    try {
+        await prisma.orderProduct.delete({
+            where: { id: itemId}
+        })
+    } catch (error) {
+        console.error(error)
+        alert('Failed deleting item')
+    }
+
+    
+
 }

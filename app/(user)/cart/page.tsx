@@ -11,12 +11,19 @@ export default async function CartPage() {
 
     const session = await getSession()
     const cart = await getCart(Number(session?.user.id))
+    console.log(cart);
+
+    let subTotal =
+        cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
+
+    const insurance = subTotal * 12 / 100
+    const shipping = 200000
+    const warranty = 200000
+    const ppn = subTotal * 11 /100
+    const totalPrice = insurance + subTotal + warranty + ppn + shipping
 
     return (
         <>
-            <header className="bg-[#EFF3FA] pt-[30px] h-[351px] -mb-[181px]">
-                <UserNavbar />
-            </header>
             <div
                 id="title"
                 className="container max-w-[1130px] mx-auto flex items-center justify-between"
@@ -63,7 +70,7 @@ export default async function CartPage() {
                             <div className="w-[150px] flex flex-col gap-1">
                                 <p className="text-sm text-[#616369]">Price</p>
                                 <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                                    Rp. {Number(item?.product?.price).toLocaleString('id-ID')}
+                                    Rp. {(item?.product.price).toLocaleString('id-ID')}
                                 </p>
                             </div>
                             <div className="w-[120px] flex flex-col gap-1">
@@ -204,7 +211,8 @@ export default async function CartPage() {
                                     </div>
                                     <p>Sub Total</p>
                                 </div>
-                                <p className="font-semibold">Rp 50.000.000</p>
+                                <p className="font-semibold">Rp. {(subTotal).toLocaleString('id-ID')}
+                                </p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
@@ -213,7 +221,7 @@ export default async function CartPage() {
                                     </div>
                                     <p>Insurance 12%</p>
                                 </div>
-                                <p className="font-semibold">Rp 18.389.492</p>
+                                <p className="font-semibold">Rp {insurance.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
@@ -222,7 +230,7 @@ export default async function CartPage() {
                                     </div>
                                     <p>Shipping (Flat)</p>
                                 </div>
-                                <p className="font-semibold">Rp 200.000</p>
+                                <p className="font-semibold">Rp {shipping.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
@@ -231,7 +239,7 @@ export default async function CartPage() {
                                     </div>
                                     <p>Warranty Original</p>
                                 </div>
-                                <p className="font-semibold">Rp 0</p>
+                                <p className="font-semibold">Rp {warranty.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
@@ -240,13 +248,13 @@ export default async function CartPage() {
                                     </div>
                                     <p>PPN 11%</p>
                                 </div>
-                                <p className="font-semibold">Rp 123.489.333</p>
+                                <p className="font-semibold">Rp {ppn.toLocaleString('id-ID')}</p>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">
                             <p className="font-semibold">Grand Total</p>
                             <p className="font-bold text-[32px] leading-[48px] underline text-[#0D5CD7]">
-                                Rp 18.498.492.444
+                                Rp {totalPrice.toLocaleString('id-ID')}
                             </p>
                         </div>
                         <div className="flex flex-col gap-3">

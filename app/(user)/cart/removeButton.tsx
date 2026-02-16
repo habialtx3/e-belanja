@@ -14,11 +14,11 @@ export function RemoveButton({ item_id }: RemoveButtonProps) {
             await deleteCart(item_id)
             window.location.reload()
         } catch (error) {
-            alert((error as Error).message)
+            window.alert((error as Error).message)
         }
     }
     return (
-        <button className="p-[12px_24px] cursor-pointer bg-white rounded-full text-center font-semibold border cursor border-[#E5E5E5]" onClick={handleDelete}>
+        <button className="p-[12px_24px] cursor-pointer bg-white rounded-full text-center font-semibold border cursor border-[#E5E5E5] hover:shadow-lg duration-200 ease-in-out" onClick={handleDelete}>
             Remove
         </button>
     )

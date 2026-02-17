@@ -1,12 +1,29 @@
-import React from 'react'
-import UserNavbar from '../components/UserNavbar'
 
-export default function CartPage() {
+import UserNavbar from '../components/UserNavbar'
+import { getCart } from '@/services/cart.service'
+import { getSession } from '@/lib/auth/session'
+import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
+import { RemoveButton } from './removeButton'
+import Link from 'next/link'
+
+export default async function CartPage() {
+
+    const session = await getSession()
+    const cart = await getCart(Number(session?.user.id))
+    console.log(cart);
+
+    let subTotal =
+        cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
+
+    const insurance = subTotal * 12 / 100
+    const shipping = 200000
+    const warranty = 200000
+    const ppn = subTotal * 11 /100
+    const totalPrice = insurance + subTotal + warranty + ppn + shipping
+
     return (
         <>
-            <header className="bg-[#EFF3FA] pt-[30px] h-[351px] -mb-[181px]">
-                <UserNavbar/>
-            </header>
             <div
                 id="title"
                 className="container max-w-[1130px] mx-auto flex items-center justify-between"
@@ -32,132 +49,53 @@ export default function CartPage() {
                 id="cart"
                 className="container max-w-[1130px] mx-auto flex flex-col gap-5 mt-[50px]"
             >
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
+                {cart?.map((order) =>
+                    order.products?.map((item) => (
+                        <div key={item.id} className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
+                            <div className="flex items-center w-[340px] gap-5">
+                                <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
+                                    <img
+                                        src="/assets/thumbnails/iphone15pro-digitalmat-gallery-3-202309-Photoroom 1.png"
+                                        className="w-full h-full object-contain"
+                                        alt=""
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <Link href={`/product/${item?.product?.id}`}>
+                                        <p className="font-semibold leading-[22px]">{item?.product?.name}</p>
+                                    </Link>
+                                    <p className="text-sm text-[#616369]">{item?.product?.category.name}</p>
+                                </div>
+                            </div>
+                            <div className="w-[150px] flex flex-col gap-1">
+                                <p className="text-sm text-[#616369]">Price</p>
+                                <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                    Rp. {(item?.product.price).toLocaleString('id-ID')}
+                                </p>
+                            </div>
+                            <div className="w-[120px] flex flex-col gap-1">
+                                <p className="text-sm text-[#616369]">Quantity</p>
+                                <div className="flex items-center gap-3">
+                                    <button className="w-6 h-6 flex shrink-0 cursor-pointer hover:scale-125 transition duration-500 ease-in-out">
+                                        <img src="/assets/icons/minus-cirlce.svg" alt="minus" />
+                                    </button>
+                                    <p className="text-[#0D5CD7] font-semibold leading-[22px]">{item.quantity}</p>
+                                    <button className="w-6 h-6 flex shrink-0 cursor-pointer hover:scale-125 transition duration-500 ease-in-out">
+                                        <img src="/assets/icons/add-circle.svg" alt="plus" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="w-[150px] flex flex-col gap-1">
+                                <p className="text-sm text-[#616369]">Total</p>
+                                <p className="font-semibold text-[#0D5CD7] leading-[22px]">
+                                    Rp. {item.subtotal.toLocaleString('id-ID')}
+                                </p>
+                            </div>
+                            <RemoveButton item_id={item.id} />
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">iPhone Sawedia Pro</p>
-                            <p className="text-sm text-[#616369]">Phones</p>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 24.000.000
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">1,389</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 789.493.222
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">MacBook Pro X</p>
-                            <p className="text-sm text-[#616369]">Laptops</p>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 112.495.390
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">421</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 1.789.493.222
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
-                <div className="product-total-card bg-white flex items-center justify-between p-5 rounded-[20px] border border-[#E5E5E5]">
-                    <div className="flex items-center w-[340px] gap-5">
-                        <div className="w-[120px] h-[70px] flex shrink-0 overflow-hidden items-center justify-center">
-                            <img
-                                src="assets/thumbnails/color_back_green__buxxfjccqjzm_large_2x-Photoroom 1.png"
-                                className="w-full h-full object-contain"
-                                alt=""
-                            />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold leading-[22px]">iMac Anniversary 100th</p>
-                            <p className="text-sm text-[#616369]">Desktops</p>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Price</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp2.589.382
-                        </p>
-                    </div>
-                    <div className="w-[120px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Quantity</p>
-                        <div className="flex items-center gap-3">
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/minus-cirlce.svg" alt="minus" />
-                            </button>
-                            <p className="text-[#0D5CD7] font-semibold leading-[22px]">5</p>
-                            <button className="w-6 h-6 flex shrink-0">
-                                <img src="assets/icons/add-circle.svg" alt="plus" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-[150px] flex flex-col gap-1">
-                        <p className="text-sm text-[#616369]">Total</p>
-                        <p className="font-semibold text-[#0D5CD7] leading-[22px]">
-                            Rp 22.839.492
-                        </p>
-                    </div>
-                    <button className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]">
-                        Remove
-                    </button>
-                </div>
+                    ))
+                )}
+
             </div>
             <form
                 action=""
@@ -171,7 +109,7 @@ export default function CartPage() {
                     <div className="flex flex-col gap-5 p-[30px] rounded-3xl border border-[#E5E5E5] bg-white">
                         <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                             <div className="flex shrink-0">
-                                <img src="assets/icons/profile-circle.svg" alt="icon" />
+                                <img src="/assets/icons/profile-circle.svg" alt="icon" />
                             </div>
                             <input
                                 type="text"
@@ -183,7 +121,7 @@ export default function CartPage() {
                         </div>
                         <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                             <div className="flex shrink-0">
-                                <img src="assets/icons/house-2.svg" alt="icon" />
+                                <img src="/assets/icons/house-2.svg" alt="icon" />
                             </div>
                             <input
                                 type="text"
@@ -196,7 +134,7 @@ export default function CartPage() {
                         <div className="flex items-center gap-[30px]">
                             <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                                 <div className="flex shrink-0">
-                                    <img src="assets/icons/global.svg" alt="icon" />
+                                    <img src="/assets/icons/global.svg" alt="icon" />
                                 </div>
                                 <input
                                     type="text"
@@ -208,7 +146,7 @@ export default function CartPage() {
                             </div>
                             <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                                 <div className="flex shrink-0">
-                                    <img src="assets/icons/location.svg" alt="icon" />
+                                    <img src="/assets/icons/location.svg" alt="icon" />
                                 </div>
                                 <input
                                     type="number"
@@ -221,7 +159,7 @@ export default function CartPage() {
                         </div>
                         <div className="flex items-start gap-[10px] rounded-[20px] border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                             <div className="flex shrink-0">
-                                <img src="assets/icons/note.svg" alt="icon" />
+                                <img src="/assets/icons/note.svg" alt="icon" />
                             </div>
                             <textarea
                                 name=""
@@ -234,7 +172,7 @@ export default function CartPage() {
                         </div>
                         <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
                             <div className="flex shrink-0">
-                                <img src="assets/icons/call.svg" alt="icon" />
+                                <img src="/assets/icons/call.svg" alt="icon" />
                             </div>
                             <input
                                 type="tel"
@@ -253,7 +191,7 @@ export default function CartPage() {
                             <div className="w-full bg-white border border-[#E5E5E5] flex items-center justify-between gap-2 p-5 rounded-3xl">
                                 <div className="flex items-center gap-[10px]">
                                     <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#FFC736] items-center justify-center overflow-hidden">
-                                        <img src="assets/icons/cake.svg" alt="icon" />
+                                        <img src="/assets/icons/cake.svg" alt="icon" />
                                     </div>
                                     <div className="flex flex-col gap-[2px]">
                                         <p className="font-semibold">100% It&aposs Original</p>
@@ -261,7 +199,7 @@ export default function CartPage() {
                                     </div>
                                 </div>
                                 <div className="flex shrink-0">
-                                    <img src="assets/icons/arrow-right.svg" alt="icon" />
+                                    <img src="/assets/icons/arrow-right.svg" alt="icon" />
                                 </div>
                             </div>
                         </a>
@@ -269,53 +207,54 @@ export default function CartPage() {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <div className="flex shrink-0">
-                                        <img src="assets/icons/tick-circle.svg" alt="icon" />
+                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
                                     </div>
                                     <p>Sub Total</p>
                                 </div>
-                                <p className="font-semibold">Rp 50.000.000</p>
+                                <p className="font-semibold">Rp. {(subTotal).toLocaleString('id-ID')}
+                                </p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <div className="flex shrink-0">
-                                        <img src="assets/icons/tick-circle.svg" alt="icon" />
+                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
                                     </div>
                                     <p>Insurance 12%</p>
                                 </div>
-                                <p className="font-semibold">Rp 18.389.492</p>
+                                <p className="font-semibold">Rp {insurance.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <div className="flex shrink-0">
-                                        <img src="assets/icons/tick-circle.svg" alt="icon" />
+                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
                                     </div>
                                     <p>Shipping (Flat)</p>
                                 </div>
-                                <p className="font-semibold">Rp 200.000</p>
+                                <p className="font-semibold">Rp {shipping.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <div className="flex shrink-0">
-                                        <img src="assets/icons/tick-circle.svg" alt="icon" />
+                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
                                     </div>
                                     <p>Warranty Original</p>
                                 </div>
-                                <p className="font-semibold">Rp 0</p>
+                                <p className="font-semibold">Rp {warranty.toLocaleString('id-ID')}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <div className="flex shrink-0">
-                                        <img src="assets/icons/tick-circle.svg" alt="icon" />
+                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
                                     </div>
                                     <p>PPN 11%</p>
                                 </div>
-                                <p className="font-semibold">Rp 123.489.333</p>
+                                <p className="font-semibold">Rp {ppn.toLocaleString('id-ID')}</p>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">
                             <p className="font-semibold">Grand Total</p>
                             <p className="font-bold text-[32px] leading-[48px] underline text-[#0D5CD7]">
-                                Rp 18.498.492.444
+                                Rp {totalPrice.toLocaleString('id-ID')}
                             </p>
                         </div>
                         <div className="flex flex-col gap-3">

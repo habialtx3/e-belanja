@@ -1,4 +1,5 @@
 import { getProducts } from '@/services/product.service'
+import { Product } from '@/types/product'
 import Link from 'next/link'
 
 export default async function ProductSection() {
@@ -7,7 +8,7 @@ export default async function ProductSection() {
     return (
         <>
             <div className="grid grid-cols-5 gap-[30px]">
-                {products.map((product: any) => (
+                {products.map((product: Product) => (
                     <Link href={`product/${product.id}`} key={product.id} className="product-card">
                         <div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                             <div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">

@@ -20,7 +20,7 @@ export default async function CategorySection() {
                     </Link>
                 </div>
                 <div className="grid grid-cols-4 gap-[30px]">
-                    {categories.map((category: any) => (
+                    {categories.map((category : any) => (
                         <Link href={`category/${category.id}`} key={category.id} className="categories-card">
                             <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
                                 <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">

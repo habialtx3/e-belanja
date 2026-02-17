@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { RemoveButton } from './removeButton'
 import Link from 'next/link'
+import CheckButton from './checkButton'
 
 export default async function CartPage() {
 
@@ -258,12 +259,7 @@ export default async function CartPage() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <a
-                                href=""
-                                className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white"
-                            >
-                                Checkout Now
-                            </a>
+                            <CheckButton />
                             <a
                                 href=""
                                 className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"

@@ -13,13 +13,13 @@ export default async function CartPage() {
     const cart = await getCart(Number(session?.user.id))
     console.log(cart);
 
-    let subTotal =
-        cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
+    let subTotal = 0
+    subTotal = cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
 
     const insurance = subTotal * 12 / 100
     const shipping = 200000
     const warranty = 200000
-    const ppn = subTotal * 11 /100
+    const ppn = subTotal * 11 / 100
     const totalPrice = insurance + subTotal + warranty + ppn + shipping
 
     return (

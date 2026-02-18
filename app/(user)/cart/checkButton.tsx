@@ -33,30 +33,31 @@ export default function CheckButton({ totalPrice, email, orderId }: Props) {
             }
 
             const data = await res.json()
-
+            
             if (data.invoiceUrl) {
                 window.location.href = data.invoiceUrl
             }
 
-            // await new Promise(resolve => setTimeout(resolve, 3000))
-            // const payload = {
-            //     exteralId: `order-${orderId}`,
-            //     amount: Math.round(totalPrice),
-            //     payerEmail: email,
-            //     description: `Checkout order - #${orderId}`,
-            //     successRedirectUrl: "http://localhost:3000/success",
-            //     failureRedirectUrl: "http://localhost:3000/failed",
-            // }
-
-            // console.log('Payload untuk xendit : ', payload);
         } catch (error) {
             console.log(error);
             alert('Invoice failed created')
         } finally {
             setLoading(false)
         }
+        
+    }
+        
+        // await new Promise(resolve => setTimeout(resolve, 3000))
+        // const payload = {
+        //     exteralId: `order-${orderId}`,
+        //     amount: Math.round(totalPrice),
+        //     payerEmail: email,
+        //     description: `Checkout order - #${orderId}`,
+        //     successRedirectUrl: "http://localhost:3000/success",
+        //     failureRedirectUrl: "http://localhost:3000/failed",
+        // }
 
-
+        // console.log('Payload untuk xendit : ', payload);
         // try {
         //     setLoading(true)
 
@@ -74,7 +75,6 @@ export default function CheckButton({ totalPrice, email, orderId }: Props) {
         // } finally{
         //     setLoading(false)
         // }
-    }
     return (
         <>
             <button

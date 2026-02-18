@@ -1,9 +1,6 @@
 
-import UserNavbar from '../components/UserNavbar'
 import { getCart } from '@/services/cart.service'
 import { getSession } from '@/lib/auth/session'
-import { redirect } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
 import { RemoveButton } from './removeButton'
 import Link from 'next/link'
 import CheckButton from './checkButton'
@@ -18,12 +15,6 @@ export default async function CartPage() {
 
     let subTotal = 0
     subTotal = cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
-
-    const insurance = subTotal * 12 / 100
-    const shipping = 200000
-    const warranty = 200000
-    const ppn = subTotal * 11 / 100
-    const totalPrice = insurance + subTotal + warranty + ppn + shipping
 
     return (
         <>
@@ -98,104 +89,8 @@ export default async function CartPage() {
                         </div>
                     ))
                 )}
-
+                <CheckoutForm subTotal={Number(subTotal)} email={session?.user.email} orderId={'2'} />
             </div>
-            <form
-                action=""
-                id="checkout-info"
-                className="container max-w-[1130px] mx-auto flex justify-between gap-5 mt-[50px] pb-[100px]"
-            >
-                <div className="w-[650px] flex flex-col shrink-0 gap-4 h-fit">
-                    <h2 className="font-bold text-2xl leading-[34px]">
-                        Your Shipping Address
-                    </h2>
-                    <CheckoutForm />
-                </div>
-                <div className="flex flex-1 flex-col shrink-0 gap-4 h-fit">
-                    <h2 className="font-bold text-2xl leading-[34px]">Payment Details</h2>
-                    <div className="w-full bg-white border border-[#E5E5E5] flex flex-col gap-[30px] p-[30px] rounded-3xl">
-                        <a href="">
-                            <div className="w-full bg-white border border-[#E5E5E5] flex items-center justify-between gap-2 p-5 rounded-3xl">
-                                <div className="flex items-center gap-[10px]">
-                                    <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#FFC736] items-center justify-center overflow-hidden">
-                                        <img src="/assets/icons/cake.svg" alt="icon" />
-                                    </div>
-                                    <div className="flex flex-col gap-[2px]">
-                                        <p className="font-semibold">100% It&aposs Original</p>
-                                        <p className="text-sm">We don&apost sell fake products</p>
-                                    </div>
-                                </div>
-                                <div className="flex shrink-0">
-                                    <img src="/assets/icons/arrow-right.svg" alt="icon" />
-                                </div>
-                            </div>
-                        </a>
-                        <div className="flex flex-col gap-4">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="flex shrink-0">
-                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
-                                    </div>
-                                    <p>Sub Total</p>
-                                </div>
-                                <p className="font-semibold">Rp. {(subTotal).toLocaleString('id-ID')}
-                                </p>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="flex shrink-0">
-                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
-                                    </div>
-                                    <p>Insurance 12%</p>
-                                </div>
-                                <p className="font-semibold">Rp {insurance.toLocaleString('id-ID')}</p>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="flex shrink-0">
-                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
-                                    </div>
-                                    <p>Shipping (Flat)</p>
-                                </div>
-                                <p className="font-semibold">Rp {shipping.toLocaleString('id-ID')}</p>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="flex shrink-0">
-                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
-                                    </div>
-                                    <p>Warranty Original</p>
-                                </div>
-                                <p className="font-semibold">Rp {warranty.toLocaleString('id-ID')}</p>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="flex shrink-0">
-                                        <img src="/assets/icons/tick-circle.svg" alt="icon" />
-                                    </div>
-                                    <p>PPN 11%</p>
-                                </div>
-                                <p className="font-semibold">Rp {ppn.toLocaleString('id-ID')}</p>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold">Grand Total</p>
-                            <p className="font-bold text-[32px] leading-[48px] underline text-[#0D5CD7]">
-                                Rp {totalPrice.toLocaleString('id-ID')}
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-3">
-                            <CheckButton totalPrice={totalPrice} email={session?.user.email} orderId='1' />
-                            <a
-                                href=""
-                                className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"
-                            >
-                                Contact Sales
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </>
 
     )

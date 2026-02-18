@@ -23,7 +23,8 @@ export default function CheckButton({ totalPrice, email, orderId }: Props) {
                 body: JSON.stringify({
                     externalId: `order-${orderId}`,
                     email: email,
-                    amount: Math.round(totalPrice)
+                    amount: Math.round(totalPrice),
+                    cartId : orderId,
                 })
             })
 

@@ -1,4 +1,5 @@
 
+import { prisma } from '@/lib/prisma';
 import { Xendit } from 'xendit-node';
 import { CreateInvoiceRequest } from 'xendit-node/invoice/models';
 
@@ -10,11 +11,11 @@ type invoiceParams = {
     externalId: string
     amount: number
     email: string
+    cartId: number
 }
+
 export async function postInvoice(params: invoiceParams) {
     const invoiceClient = xenditClient.Invoice;
-
-
     const data: CreateInvoiceRequest = {
         amount: Number(params.amount),
         invoiceDuration: 172800,
@@ -27,7 +28,13 @@ export async function postInvoice(params: invoiceParams) {
     }
 
     console.log(data);
-    
+
+    await prisma.order.update({
+        where: { id: Number(params.cartId) },
+        data: {
+            status: 'success'
+        }
+    })
 
     const response = await invoiceClient.createInvoice({ data })
 

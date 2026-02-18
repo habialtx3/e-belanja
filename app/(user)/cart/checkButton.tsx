@@ -10,16 +10,51 @@ export default function CheckButton({ totalPrice, email, orderId }: Props) {
     const [loading, setLoading] = useState(false)
 
     async function handleCheckout() {
-        const payload = {
-            exteralId: `order-${orderId}`,
-            amount: Math.round(totalPrice),
-            payerEmail: email,
-            description: `Checkout order - #${orderId}`,
-            successRedirectUrl: "http://localhost:3000/success",
-            failureRedirectUrl: "http://localhost:3000/failed",
+
+        try {
+
+            setLoading(true)
+
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    externalId: `order-${orderId}`,
+                    email: email,
+                    amount: Math.round(totalPrice)
+                })
+            })
+
+            if (!res.ok) {
+                throw new Error("Failed create Invoice");
+            }
+
+            const data = await res.json()
+
+            if (data.invoiceUrl) {
+                window.location.href = data.invoiceUrl
+            }
+
+            // await new Promise(resolve => setTimeout(resolve, 3000))
+            // const payload = {
+            //     exteralId: `order-${orderId}`,
+            //     amount: Math.round(totalPrice),
+            //     payerEmail: email,
+            //     description: `Checkout order - #${orderId}`,
+            //     successRedirectUrl: "http://localhost:3000/success",
+            //     failureRedirectUrl: "http://localhost:3000/failed",
+            // }
+
+            // console.log('Payload untuk xendit : ', payload);
+        } catch (error) {
+            console.log(error);
+            alert('Invoice failed created')
+        } finally {
+            setLoading(false)
         }
 
-        console.log('Payload untuk xendit : ', payload);
 
         // try {
         //     setLoading(true)
@@ -42,8 +77,8 @@ export default function CheckButton({ totalPrice, email, orderId }: Props) {
     return (
         <>
             <button
-            type='button'
-                className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center cursor-poitner font-semibold text-white"
+                type='button'
+                className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center cursor-pointer hover:bg-[#0D5CD7]/60 transtion duration-500 font-semibold text-white"
                 onClick={handleCheckout}
             >
                 {loading ? 'Processing ...' : 'Checkout Now'}

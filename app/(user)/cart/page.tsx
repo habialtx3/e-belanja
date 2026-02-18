@@ -258,7 +258,7 @@ export default async function CartPage() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <CheckButton totalPrice={totalPrice} email={session?.user.email || ''} orderId='123' />
+                            <CheckButton totalPrice={totalPrice} email={session?.user.email} orderId='123' />
                             <a
                                 href=""
                                 className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"

@@ -12,7 +12,6 @@ export default async function CartPage() {
 
     const session = await getSession()
     const cart = await getCart(Number(session?.user.id))
-    console.log(cart);
 
     let subTotal = 0
     subTotal = cart?.flatMap(order => order.products ?? []).reduce((acc, item) => acc + Number(item.subtotal), 0) ?? 0
@@ -259,7 +258,7 @@ export default async function CartPage() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <CheckButton />
+                            <CheckButton totalPrice={totalPrice} email={session?.user.email || ''} orderId='123' />
                             <a
                                 href=""
                                 className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"

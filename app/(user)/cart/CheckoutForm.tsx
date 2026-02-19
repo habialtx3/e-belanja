@@ -29,7 +29,7 @@ export default function CheckoutForm({ subTotal, email, orderId }: Props) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    externalId: `order-${orderId}`,
+                    externalId: `${orderId}`,
                     email: email,
                     amount: Math.round(totalPrice),
                     cartId: orderId,
@@ -55,7 +55,7 @@ export default function CheckoutForm({ subTotal, email, orderId }: Props) {
 
     }
 
-    function handleOrderDetail(e: React.FormEvent<HTMLFormElement>) {
+    async function handleOrderDetail(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         const form = e.currentTarget
@@ -86,8 +86,7 @@ export default function CheckoutForm({ subTotal, email, orderId }: Props) {
         setError({})
         console.log('Payload : ', parsed.data);
 
-
-        console.log(payload);
+        await handleCheckout()
 
     }
 
@@ -95,7 +94,7 @@ export default function CheckoutForm({ subTotal, email, orderId }: Props) {
         <>
             <form
                 action=""
-                onSubmit={handleOrderDetail}
+
                 id="checkout-info"
                 className="container max-w-[1130px] mx-auto flex justify-between gap-5 mt-[50px] pb-[100px]"
             >
@@ -269,7 +268,8 @@ export default function CheckoutForm({ subTotal, email, orderId }: Props) {
                         </div>
                         <div className="flex flex-col gap-3">
                             <button
-                                type='submit'
+                                type='button'
+                                onClick={handleCheckout}
                                 className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center cursor-pointer hover:bg-[#0D5CD7]/60 transtion duration-500 font-semibold text-white"
                             >
                                 {loading ? 'Processing ...' : 'Checkout Now'}

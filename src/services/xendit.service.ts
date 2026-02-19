@@ -21,7 +21,7 @@ export async function postInvoice(params: invoiceParams) {
         const data: CreateInvoiceRequest = {
             amount: Number(params.amount),
             invoiceDuration: 172800,
-            externalId: `${params.externalId} - ${Date.now()}`,
+            externalId: `${params.externalId}`,
             description: `Checkout Order ${params.externalId}`,
             payerEmail: params.email,
             currency: "IDR",

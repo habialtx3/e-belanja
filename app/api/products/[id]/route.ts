@@ -29,7 +29,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function UPDATE(req: Request, { params }: { params: { id: string } }) {
     try {
         const { id } = await params
         if (!id) return NextResponse.json({ message: "Id is required" }, { status: 500 })

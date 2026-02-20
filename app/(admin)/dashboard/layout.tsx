@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/dashboard/app-sidebar"
 import { DashboardBar } from "@/components/dashboard/dashboard-bar"
 import { Poppins } from "next/font/google";
 import { Metadata } from "next";
-
+import './user.css'
 
 const poppins = Poppins({
   subsets: ["latin"],

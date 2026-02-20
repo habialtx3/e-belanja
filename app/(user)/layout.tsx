@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import "./user.css"
+import "flickity/css/flickity.css"
 import UserNavbar from "./components/UserNavbar";
 
 

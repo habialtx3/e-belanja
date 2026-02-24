@@ -31,7 +31,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           </SidebarProvider>
-          {children}
         </body>
       </html>
     </>

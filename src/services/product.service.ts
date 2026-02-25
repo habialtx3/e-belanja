@@ -1,6 +1,6 @@
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function getProducts() {
     const res = await fetch("http://localhost:3000/api/products", {
@@ -27,8 +27,8 @@ export async function postProduct(data: Prisma.ProductCreateInput) {
         const product = await prisma.product.create({
             data
         })
-        
-        return product
+    
+        return product 
     } catch (error) {
         console.error("Error creating product:", error)
         throw error

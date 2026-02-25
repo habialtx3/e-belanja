@@ -20,7 +20,6 @@ import {
 const menuItems = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "Products", href: "/dashboard/products", icon: Package },
-  { name: "Categories", href: "/dashboard/category", icon: Tags },
   { name: "Brands", href: "/dashboard/brands", icon: Tags },
   { name: "Locations", href: "/dashboard/location", icon: MapPin },
   { name: "Orders", href: "/dashboard/orders", icon: ShoppingCart },

@@ -29,3 +29,7 @@ export async function createProductAction(formData: FormData) {
 
     redirect('/dashboard/products')
 }
+
+export async function getProduct(id : string) {
+    
+}

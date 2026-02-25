@@ -1,5 +1,10 @@
-export default function page() {
+'use client'
+import { useParams } from "next/navigation"
+import ProductForm from "../../components/ProductForm"
+
+export default function Page() {
+
   return (
-    <div>Edit page</div>
+    <ProductForm />
   )
 }

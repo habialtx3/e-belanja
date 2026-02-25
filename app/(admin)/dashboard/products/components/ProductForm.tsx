@@ -6,19 +6,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from "react"
 import { createProductAction } from "../create/action"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { getBrands } from "@/services/brand.service"
 import { getCategories } from "@/services/category.service"
 import { BrandProps, CategoryProps, LocationProps } from "@/types/common"
 import { getLocations } from "@/services/location.service"
+import { ProductProps } from "@/types/product"
+import { getProduct } from "../edit/[id]/action"
 
 
-export default function ProductForm({isEdit} : {isEdit : boolean}) {
+export default function ProductForm() {
     const [error, setError] = useState<any>({})
-
     const [brands, setBrands] = useState<BrandProps[]>([])
     const [categories, setCategories] = useState<CategoryProps[]>([])
     const [locations, setLocations] = useState<LocationProps[]>([])
+    const [product, setProduct] = useState<ProductProps>()
+
+    const { id } = useParams()
+    const isEdit = !!id
+
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -30,21 +36,34 @@ export default function ProductForm({isEdit} : {isEdit : boolean}) {
         images: ""
     })
 
-    if(!isEdit){
-        console.log('halaman create');
-    }
 
     useEffect(() => {
         async function loadData() {
             const brandsData = await getBrands()
             const categoriesData = await getCategories()
             const locationsData = await getLocations()
+            if (isEdit && id) {
+                const productData = await getProduct(id)
+                if (!productData) return
+                console.log(productData);
+
+                setForm({
+                    name: productData.name,
+                    description: productData.description,
+                    price: productData.price.toString(),
+                    brand_id: productData.brand_id.toString(),
+                    category_id: productData.category_id.toString(),
+                    location_id: productData.location_id.toString(),
+                    stock: productData.stock,
+                    images: ""
+                })
+            }
             setBrands(brandsData)
             setCategories(categoriesData)
             setLocations(locationsData)
         }
         loadData()
-    }, []
+    }, [id]
     )
 
 
@@ -92,61 +111,72 @@ export default function ProductForm({isEdit} : {isEdit : boolean}) {
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Brand</label>
-                            <Select
-                                value={form.brand_id}
-                                name='brand_id'
-                                onValueChange={(value) => handleChange("brand_id", value)}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select brand" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {brands.map((brand) => (
-                                        <SelectItem key={brand.id} value={String(brand.id)} >
-                                            {brand.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            {
+                                categories.length > 0 && (
+                                    <Select
+                                        value={form.brand_id}
+                                        name='brand_id'
+                                        onValueChange={(value) => handleChange("brand_id", value)}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select brand" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {brands.map((brand) => (
+                                                <SelectItem key={brand.id} value={String(brand.id)} >
+                                                    {brand.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                )
+                            }
+
                             <input type="hidden" name="brand_id" value={form.brand_id} />
                             {error.brand_id && (<p className="text-red-500 text-sm">{error.brand_id[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Category</label>
-                            <Select
-                                name="category_id"
-                                value={form.category_id}
-                                onValueChange={(value) => handleChange("category_id", value)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {categories.map((category) => (
-                                        <SelectItem key={category.id} value={String(category.id)}>{category.name}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            {
+                                categories.length > 0 && (
+                                    <Select
+                                        name="category_id"
+                                        value={form.category_id}
+                                        onValueChange={(value) => handleChange("category_id", value)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {categories.map((category) => (
+                                                <SelectItem key={category.id} value={String(category.id)}>{category.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                )
+                            }
                             <input type="hidden" name="category_id" value={form.category_id} />
                             {error.category_id && (<p className="text-red-500 text-sm">{error.category_id[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Location</label>
-                            <Select
-                                name="location_id"
-                                value={form.location_id}
-                                onValueChange={(value) => handleChange("location_id", value)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select location" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {locations.map((location) => (
-                                        <SelectItem key={location.id} value={String(location.id)}>{location.name}</SelectItem>
-                                    ))}
+                            {locations.length > 0 && (
+                                <Select
+                                    name="location_id"
+                                    value={form.location_id}
+                                    onValueChange={(value) => handleChange("location_id", value)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select location" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {locations.map((location) => (
+                                            <SelectItem key={location.id} value={String(location.id)}>{location.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            )}
 
-                                </SelectContent>
-                            </Select>
                             <input type="hidden" name="location_id" value={form.location_id} />
                             {error.location_id && (<p className="text-red-500 text-sm">{error.location_id[0]}</p>)}
                         </div>
@@ -183,7 +213,7 @@ export default function ProductForm({isEdit} : {isEdit : boolean}) {
 
 
                         <Button type="submit" className="w-full">
-                            Create Product
+                            {(isEdit) ? 'Edit Product' : 'Create Products'}
                         </Button>
 
                     </form>

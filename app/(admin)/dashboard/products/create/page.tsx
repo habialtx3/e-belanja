@@ -7,7 +7,7 @@ export default function Page() {
   const isEdit = false
   return (
     <>
-      <ProductForm isEdit={isEdit} />
+      <ProductForm />
     </>
   )
 }

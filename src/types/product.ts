@@ -1,7 +1,7 @@
 import { ProductStock } from "./common"
 import { Brand, Category, Location } from "./meta"
 
-export type Product = {
+export interface ProductProps {
     id: number
     name: string
     description: string

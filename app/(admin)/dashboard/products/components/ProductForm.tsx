@@ -240,7 +240,6 @@ export default function ProductForm() {
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Stock Type</label>
                             <Select
-                                name="stock"
                                 value={form.stock}
                                 onValueChange={(value) => handleChange("stock", value)}
                             >

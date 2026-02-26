@@ -56,7 +56,7 @@ export async function createProductAction(prevState: ActionState, formData: Form
         images: formData.get("images") as string,
     }
 
-    
+
 
     await postProduct({
         ...data,
@@ -67,6 +67,28 @@ export async function createProductAction(prevState: ActionState, formData: Form
 }
 
 export async function editProductAction(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const rawData = {
+        name: formData.get("name"),
+        description: formData.get("description"),
+        price: Number(formData.get("price")),
+        brand_id: Number(formData.get("brand_id")),
+        category_id: Number(formData.get("category_id")),
+        location_id: Number(formData.get("location_id")),
+        stock: formData.get("stock"),
+        images: [formData.get("images")]
+    }
+
+    const parsed = createProductSchema.safeParse(rawData)
+
+    if (!parsed.success) {
+        return {
+            errors: parsed.error.flatten().fieldErrors
+        }
+    }
+
+    console.log(parsed);
+
+
     const data = {
         name: formData.get("name") as string,
         description: formData.get("description") as string,
@@ -84,15 +106,7 @@ export async function editProductAction(id: string, prevState: ActionState, form
         images: formData.get("images") as string,
     }
 
-    const parsed = createProductSchema.safeParse(data)
 
-    if (!parsed.success) {
-        return {
-            errors: parsed.error.flatten().fieldErrors
-        }
-    }
-
-    console.log(parsed);
 
 
     return {}

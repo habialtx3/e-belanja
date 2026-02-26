@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useEffect, useState } from "react"
-import { createProductAction } from "../create/action"
+import { useActionState, useCallback, useEffect, useState } from "react"
+import { ActionState, createProductAction, editProductAction } from "../create/action"
 import { useParams, useRouter } from "next/navigation"
 import { getBrands } from "@/services/brand.service"
 import { getCategories } from "@/services/category.service"
@@ -14,66 +14,125 @@ import { getLocations } from "@/services/location.service"
 import { ProductProps } from "@/types/product"
 import { getProduct } from "../edit/[id]/action"
 
+const initial_Form = {
+    name: "",
+    description: "",
+    price: "",
+    brand_id: "",
+    category_id: "",
+    location_id: "",
+    stock: "",
+    images: ""
+}
+
+const initial_State: ActionState = {
+    errors: {}
+}
+
+interface FormErrors {
+    name?: string[];
+    description?: string[];
+    price?: string[];
+    brand_id?: string[];
+    category_id?: string[];
+    location_id?: string[];
+    stock?: string[];
+    images?: string[];
+}
 
 export default function ProductForm() {
-    const [error, setError] = useState<any>({})
-    const [brands, setBrands] = useState<BrandProps[]>([])
-    const [categories, setCategories] = useState<CategoryProps[]>([])
-    const [locations, setLocations] = useState<LocationProps[]>([])
-    const [product, setProduct] = useState<ProductProps>()
 
     const { id } = useParams()
     const isEdit = !!id
 
-    const [form, setForm] = useState({
-        name: "",
-        description: "",
-        price: "",
-        brand_id: "",
-        category_id: "",
-        location_id: "",
-        stock: "",
-        images: ""
-    })
+    const action = isEdit
+        ? (prevState: ActionState, formData: FormData) =>
+            editProductAction(String(id), prevState, formData)
+        : createProductAction
 
+    const [state, formAction] = useActionState<ActionState, FormData>(
+        isEdit
+            ? action
+            : createProductAction,
+        initial_State
+    )
+
+    const [brands, setBrands] = useState<BrandProps[]>([])
+    const [categories, setCategories] = useState<CategoryProps[]>([])
+    const [locations, setLocations] = useState<LocationProps[]>([])
+
+
+    const [form, setForm] = useState(initial_Form)
+
+    useEffect(() => {
+        async function loadMasterData() {
+            try {
+                const [b, c, l] = await Promise.all([
+                    getBrands(),
+                    getCategories(),
+                    getLocations()
+                ])
+
+                setBrands(b)
+                setCategories(c)
+                setLocations(l)
+            } catch (error) {
+                console.error("Error loading master data", error)
+            }
+        }
+
+        loadMasterData()
+    }, [])
 
     useEffect(() => {
         async function loadData() {
-            const brandsData = await getBrands()
-            const categoriesData = await getCategories()
-            const locationsData = await getLocations()
             if (isEdit && id) {
-                const productData = await getProduct(id)
-                if (!productData) return
-                console.log(productData);
+                try {
+                    const [b, c, l] = await Promise.all([
+                        getBrands(),
+                        getCategories(),
+                        getLocations()
+                    ])
 
-                setForm({
-                    name: productData.name,
-                    description: productData.description,
-                    price: productData.price.toString(),
-                    brand_id: productData.brand_id.toString(),
-                    category_id: productData.category_id.toString(),
-                    location_id: productData.location_id.toString(),
-                    stock: productData.stock,
-                    images: ""
-                })
+                    setBrands(b);
+                    setCategories(c);
+                    setLocations(l);
+                    async function loadAllData() {
+                        if (isEdit && id) {
+                            const productData = await getProduct(id.toString())
+                            if (productData) {
+                                setForm({
+                                    name: productData.name,
+                                    description: productData.description,
+                                    price: productData.price.toString(),
+                                    brand_id: productData.brand_id.toString(),
+                                    category_id: productData.category_id.toString(),
+                                    location_id: productData.location_id.toString(),
+                                    stock: productData.stock,
+                                    images: ""
+                                })
+                            }
+                        }
+                    }
+                    loadAllData()
+                } catch (error) {
+                    console.error('Error loading data', error);
+
+                }
             }
-            setBrands(brandsData)
-            setCategories(categoriesData)
-            setLocations(locationsData)
         }
         loadData()
-    }, [id]
+    }, [id, isEdit]
     )
 
 
 
-    const handleChange = (key: string, value: string) => {
+    const handleChange = useCallback((key: string, value: string) => {
         setForm(prev => ({
             ...prev,
             [key]: value
         }))
-    }
+    }, [])
 
 
     return (
@@ -83,14 +142,14 @@ export default function ProductForm() {
 
                     <h1 className="text-2xl font-bold mb-6">{(!isEdit) ? 'Create Product' : 'Edit Product'}</h1>
 
-                    <form action={createProductAction} className="space-y-6">
+                    <form action={formAction} className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Product Name</label>
                             <Input
                                 value={form.name}
                                 onChange={(e) => handleChange("name", e.target.value)}
                                 name="name" placeholder="Product name..." />
-                            {error.name && (<p className="text-red-500 text-sm">{error.name[0]}</p>)}
+                            {state.errors?.name && (<p className="text-red-500 text-sm">{state.errors?.name[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
@@ -98,7 +157,7 @@ export default function ProductForm() {
                             <Textarea name="description" placeholder="Product description..."
                                 value={form.description}
                                 onChange={(e) => handleChange("description", e.target.value)} />
-                            {error.description && (<p className="text-red-500 text-sm">{error.description[0]}</p>)}
+                            {state.errors?.description && (<p className="text-red-500 text-sm">{state.errors?.description[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
@@ -106,16 +165,15 @@ export default function ProductForm() {
                             <Input name="price" type="number" placeholder="Input price..."
                                 value={form.price}
                                 onChange={(e) => handleChange("price", e.target.value)} />
-                            {error.price && (<p className="text-red-500 text-sm">{error.price[0]}</p>)}
+                            {state.errors?.price && (<p className="text-red-500 text-sm">{state.errors?.price[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Brand</label>
                             {
-                                categories.length > 0 && (
+                                brands.length > 0 && (
                                     <Select
                                         value={form.brand_id}
-                                        name='brand_id'
                                         onValueChange={(value) => handleChange("brand_id", value)}
                                     >
                                         <SelectTrigger>
@@ -133,7 +191,7 @@ export default function ProductForm() {
                             }
 
                             <input type="hidden" name="brand_id" value={form.brand_id} />
-                            {error.brand_id && (<p className="text-red-500 text-sm">{error.brand_id[0]}</p>)}
+                            {state.errors?.brand_id && (<p className="text-red-500 text-sm">{state.errors?.brand_id[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
@@ -141,7 +199,6 @@ export default function ProductForm() {
                             {
                                 categories.length > 0 && (
                                     <Select
-                                        name="category_id"
                                         value={form.category_id}
                                         onValueChange={(value) => handleChange("category_id", value)}>
                                         <SelectTrigger>
@@ -156,14 +213,13 @@ export default function ProductForm() {
                                 )
                             }
                             <input type="hidden" name="category_id" value={form.category_id} />
-                            {error.category_id && (<p className="text-red-500 text-sm">{error.category_id[0]}</p>)}
+                            {state.errors?.category_id && (<p className="text-red-500 text-sm">{state.errors?.category_id[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Location</label>
                             {locations.length > 0 && (
                                 <Select
-                                    name="location_id"
                                     value={form.location_id}
                                     onValueChange={(value) => handleChange("location_id", value)}>
                                     <SelectTrigger>
@@ -178,7 +234,7 @@ export default function ProductForm() {
                             )}
 
                             <input type="hidden" name="location_id" value={form.location_id} />
-                            {error.location_id && (<p className="text-red-500 text-sm">{error.location_id[0]}</p>)}
+                            {state.errors?.location_id && (<p className="text-red-500 text-sm">{state.errors?.location_id[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
@@ -197,7 +253,7 @@ export default function ProductForm() {
                                 </SelectContent>
                             </Select>
                             <input type="hidden" name="stock" value={form.stock} />
-                            {error.stock && (<p className="text-red-500 text-sm">{error.stock[0]}</p>)}
+                            {state.errors?.stock && (<p className="text-red-500 text-sm">{state.errors?.stock[0]}</p>)}
                         </div>
 
                         <div className="space-y-2">
@@ -208,7 +264,7 @@ export default function ProductForm() {
                                 onChange={(e) => handleChange("images", e.target.value)}
                                 placeholder="Image URL"
                             />
-                            {error.images && (<p className="text-red-500 text-sm">{error.images[0]}</p>)}
+                            {state.errors?.images && (<p className="text-red-500 text-sm">{state.errors?.images[0]}</p>)}
                         </div>
 
 

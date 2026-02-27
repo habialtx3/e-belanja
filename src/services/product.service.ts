@@ -34,3 +34,18 @@ export async function postProduct(data: Prisma.ProductCreateInput) {
         throw error
     }
 }
+
+export async function updateProduct(id : number, data : Prisma.ProductUpdateInput){
+    try {
+        const newData = data
+
+        const updatedProduct = await prisma.product.update({
+            where : {id},
+            data : data
+        })
+
+        return updatedProduct
+    } catch (error) {
+        console.error("Error updating data",error);        
+    }
+}

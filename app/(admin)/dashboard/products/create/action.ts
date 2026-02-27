@@ -1,6 +1,6 @@
 'use server'
 import { ProductStock } from "@/generated/prisma/enums"
-import { postProduct } from "@/services/product.service"
+import { postProduct, updateProduct } from "@/services/product.service"
 import { createProductSchema } from "@/validators/product"
 import { redirect } from "next/navigation"
 
@@ -86,28 +86,49 @@ export async function editProductAction(id: string, prevState: ActionState, form
         }
     }
 
-    console.log(parsed);
-
-
-    const data = {
-        name: formData.get("name") as string,
-        description: formData.get("description") as string,
-        price: BigInt(formData.get("price") as string),
-        brand: {
-            connect: { id: Number(formData.get('brand_id')) }
-        },
-        category: {
-            connect: { id: Number(formData.get('category_id')) }
-        },
-        location: {
-            connect: { id: Number(formData.get('location_id')) }
-        },
-        stock: formData.get("stock") as ProductStock,
-        images: formData.get("images") as string,
+    try {
+        await updateProduct(Number(id), {
+            name: parsed.data.name,
+            description: parsed.data.description,
+            price: BigInt(parsed.data.price),
+            brand: {
+                connect: { id: parsed.data.brand_id }
+            },
+            category: {
+                connect: { id: parsed.data.category_id }
+            },
+            location: {
+                connect: { id: parsed.data.location_id }
+            },
+            stock: parsed.data.stock,
+            images: { set: [parsed.data.images[0]] }
+        })
+    } catch (error) {
+        console.error("Update failed:", error)
+        return {
+            errors: {
+                name: ["Failed to update product"]
+            }
+        }
     }
 
+    redirect('/dashboard/products')
+    // const data = {
+    //     name: formData.get("name") as string,
+    //     description: formData.get("description") as string,
+    //     price: BigInt(formData.get("price") as string),
+    //     brand: {
+    //         connect: { id: Number(formData.get('brand_id')) }
+    //     },
+    //     category: {
+    //         connect: { id: Number(formData.get('category_id')) }
+    //     },
+    //     location: {
+    //         connect: { id: Number(formData.get('location_id')) }
+    //     },
+    //     stock: formData.get("stock") as ProductStock,
+    //     images: formData.get("images") as string,
+    // }
 
-
-
-    return {}
+    // return {}
 }
